@@ -27,8 +27,23 @@ uvicorn app:app --reload --port 8000
     后续可替换为真正的深度学习人脸特征匹配。
 
 
-## v2.0优化
-- 我尝试继续装更强的 facenet_pytorch / torch / torchvision，但安装失败了，所以当前稳定可跑版本保持在 face_recognition
-- 这不影响现在系统运行，只是识别实现不是最终最强方案
+## v2.0 升级日志
+- 前后端分离
+- 后端图像识别：
+    - opencv-python: 图片解码， 
+        - cv2.imdecode(arr, cv2.IMREAD_COLOR)
+        - cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
+    face_recognition: hog模型做人脸识别
+        - face_recognition.face_locations(rgb, model='hog') # 人脸识别
+        - face_recognition.face_encodings(rgb, known_face_locations=boxes, model='hog') # 人脸数据编码
+        - cosine_similarity(vector, emp.face_vector) # 人脸张量匹配 - 余弦积 得分 > 0.5 可手动调整！ <- 伪造打卡图片/
+        
 
-- 把后端从 face_recognition 再改成 当前环境里最稳的可运行深度学习方案，然后再做一次完整冒烟验证。
+
+## v3.0 
+
+- 前端
+    - 页面更商业化，布局扁平化：
+    - 增加批量导入功能
+- 后端：facenet_pytorch / torch / torchvision
+    - 把后端从 face_recognition 再改成 当前环境里最稳的可运行深度学习方案，然后再做一次完整冒烟验证
