@@ -1,25 +1,34 @@
 # Face Workhour App
 
+## 原型验证
 基于 FastAPI + SQLite + Pillow 的人脸考勤 Web 应用（最小可用版）。
+功能
 
-## 功能
-- 员工录入（姓名、工号、照片）
-- 打卡登记（上传照片）
-- 识别结果记录到 SQLite
-- 简单的 Web 界面：录入 / 打卡 / 查看列表
+    员工录入（姓名、工号、照片）
+    打卡登记（上传照片）
+    识别结果记录到 SQLite
+    简单的 Web 界面：录入 / 打卡 / 查看列表
 
-## 运行
-```bash
+运行
+
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn app:app --reload --port 8000
-```
 
 浏览器打开：
-- http://127.0.0.1:8000/
-- http://127.0.0.1:8000/api/health
 
-## 说明
-- 当前识别逻辑是“照片指纹精确匹配”的最小闭环，用于先跑通业务流。
-- 后续可替换为真正的深度学习人脸特征匹配。
+    http://127.0.0.1:8000/
+    http://127.0.0.1:8000/api/health
+
+说明
+
+    当前识别逻辑是“照片指纹精确匹配”的最小闭环，用于先跑通业务流。
+    后续可替换为真正的深度学习人脸特征匹配。
+
+
+## v2.0优化
+- 我尝试继续装更强的 facenet_pytorch / torch / torchvision，但安装失败了，所以当前稳定可跑版本保持在 face_recognition
+- 这不影响现在系统运行，只是识别实现不是最终最强方案
+
+- 把后端从 face_recognition 再改成 当前环境里最稳的可运行深度学习方案，然后再做一次完整冒烟验证。

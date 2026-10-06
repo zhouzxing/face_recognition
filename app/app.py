@@ -4,6 +4,8 @@ from pathlib import Path
 from typing import Any, Optional
 import cv2, face_recognition, numpy as np
 from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel, Field as PydField
 from sqlmodel import Field, SQLModel, Session, create_engine, select
 
@@ -121,6 +123,10 @@ def best_match(vector: bytes, employees: list[Employee]) -> tuple[Optional[Emplo
     return best, best_score
 
 app = FastAPI(title='Face Recognition Attendance API')
+
+# 跨域问题
+# app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_credentials=True, allow_methods=['*'], allow_headers=['*'])   
+
 
 @app.get('/api/health')
 def health():
